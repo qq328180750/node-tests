@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="JavaScriptLibraryMappings">
-    <file url="file://$PROJECT_DIR$/index.js" libraries="{express-DefinitelyTyped, node-DefinitelyTyped}" />
-    <file url="file://$PROJECT_DIR$/routers/signup.js" libraries="{express-DefinitelyTyped, node-DefinitelyTyped}" />
-    <file url="PROJECT" libraries="{jQuery-2.0.0, koa-DefinitelyTyped, mysql-DefinitelyTyped, node-DefinitelyTyped}" />
+    <file url="file://$PROJECT_DIR$/index.js" libraries="{@types/express}" />
+    <file url="PROJECT" libraries="{@types/koa, @types/koa-route, @types/mysql, @types/node, jQuery-2.0.0}" />
   </component>
 </project>

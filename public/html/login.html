@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>登录</title>
+</head>
+<body>
+<div>
+    <h1>用户登录页面</h1>
+    <form method="post" id="forms">
+        账号: <input type="text" name="username" id="username">
+        密码： <input type="text" name="password" id="password">
+        <button id="subbtn" type="submit">登录</button>
+    </form>
+    <button id="logout">登出</button>
+    <button id="checkLogin">校验登录</button>
+    <h1>在这里注册</h1>
+    <form method="post" id="forms2">
+        账号: <input type="text" name="username" id="username1">
+        密码： <input type="text" name="password" id="password1">
+        <button id="subbtn2" type="submit">登录</button>
+    </form>
+</div>
+<script src="http://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script>
+    var btn =$("#subbtn");
+    var btn1 =$("#subbtn2");
+    var btn2 =$('#logout');
+    var btn3 =$('#checkLogin');
+    btn.click((ev)=>{
+        ev.preventDefault()
+        $.ajax({
+            url:'http://localhost:3000/signup',
+            method:'post',
+            dataType:'json',
+            data:{
+                username:$("#username")[0].value,
+                password:$("#password")[0].value
+            },
+            success:(msg)=>{
+                console.log(msg)
+            },
+            error(err){
+                console.log(err)
+            }
+        })
+    })
+    btn1.click((ev)=>{
+        ev.preventDefault()
+        $.ajax({
+            url:'http://localhost:3000/register',
+            method:'post',
+            dataType:'json',
+            data:{
+                username:$("#username1")[0].value,
+                password:$("#password1")[0].value
+            },
+            success:(msg)=>{
+                console.log(msg)
+            },
+            error(err){
+                console.log(err)
+            }
+        })
+    })
+    btn2.click(ev=>{
+        $.ajax({
+            url:'http://localhost:3000/logout',
+            method:'get',
+            dataType:'json',
+            success:(msg)=>{
+                console.log(msg)
+            },
+            error(err){
+                console.log(err)
+            }
+        })
+    })
+    btn3.click(ev=>{
+        $.ajax({
+            url:'http://localhost:3000/checkLogin',
+            method:'get',
+            dataType:'json',
+            success:(msg)=>{
+                console.log(msg)
+            },
+            error(err){
+                console.log(err)
+            }
+        })
+    })
+</script>
+</body>
+</html>

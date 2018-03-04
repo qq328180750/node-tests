@@ -15,5 +15,9 @@
     <orderEntry type="library" name="express-DefinitelyTyped" level="application" />
     <orderEntry type="library" name="jQuery-2.0.0" level="application" />
     <orderEntry type="library" name="mysql-DefinitelyTyped" level="application" />
+    <orderEntry type="library" name="@types/express" level="application" />
+    <orderEntry type="library" name="@types/node" level="application" />
+    <orderEntry type="library" name="@types/mysql" level="application" />
+    <orderEntry type="library" name="@types/koa" level="application" />
   </component>
 </module>
