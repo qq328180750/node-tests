@@ -22,7 +22,7 @@ app.use(session({
     store:new MysqlStore(sessionMysqlConfig),
     cookie:{
         httpOnly: true,         // 是否只用于 http 请求中获取
-        overwrite: false        // 是否允许重写
+        overwrite: false,        // 是否允许重写
     }
 }))
 
@@ -33,7 +33,9 @@ app.use(bodyParser({
     formLimit: '1mb'
 }))
 
-app.use(require('./routers/signup.js').routes())
+app.use(require('./routers/signup.js').routes())//用户登录、注册、登录校验
+app.use(require('./routers/adminCURD.js').routes())//后台商品的设置
+
 
 app.listen(3000)
 console.log('listening on port:'+config.port)
