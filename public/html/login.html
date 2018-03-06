@@ -20,71 +20,200 @@
         密码： <input type="text" name="password" id="password1">
         <button id="subbtn2" type="submit">登录</button>
     </form>
+    <hr>
+    <h1>增删改查</h1>
+    <h2>后台调整商品库</h2>
+    <button id="queryAll">查看所有数据</button>
+    <input type="text" id="storeId" required>
+    <button id="queryId">查询指定商品</button>
+    <form method="post" id="form2" enctype="multipart/form-data">
+        <div>
+            <label for="canme">商品名称</label>
+            <input type="text" name="cname" id="canme">
+        </div>
+        <div>
+            <label for="type">商品类型</label>
+            <input type="text" name="type" id="type">
+        </div>
+        <div>
+            <label for="total">库存总量</label>
+            <input type="text" name="total" id="total">
+        </div>
+        <div>
+            <label for="itemNo">商品录入编号</label>
+            <input type="text" name="itemNo" id="itemNo">
+        </div>
+        <div>
+            <label for="imgArr">图片链接</label>
+            <input type="file" name="imgArr" id="imgArr" multiple>
+            <button>点击上传</button>
+        </div>
+        <div>
+            <label for="content">商品内容</label>
+            <input type="text" name="content" id="content">
+        </div>
+        <div>
+            <label for="commentNo">评论区编号</label>
+            <input type="text" name="commentNo" id="commentNo">
+        </div>
+        <div>
+            <label for="score">商品积分细节</label>
+            <input type="text" name="score" id="score">
+        </div>
+        <button type="submit" id="addStore">添加商品</button>
+        <button type="submit" id="updateStore">更新商品</button>
+    </form>
+    <div id="alldata">
+    </div>
+    <form action="http://localhost:3000/admstore" method="post" enctype="multipart/form-data">
+        <input type="file" name="file"/>
+        <input type="submit" value="ok" id="uploads"/>
+    </form>
 </div>
 <script src="http://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
 <script>
-    var btn =$("#subbtn");
-    var btn1 =$("#subbtn2");
-    var btn2 =$('#logout');
-    var btn3 =$('#checkLogin');
-    btn.click((ev)=>{
+    var btn = $("#subbtn");
+    var btn1 = $("#subbtn2");
+    var btn2 = $('#logout');
+    var btn3 = $('#checkLogin');
+    var btn4 = $('#queryAll');
+    var queryId = $('#queryId');
+    var addStore = $('#addStore');
+    var updateStore = $('#updateStore');
+    var box = $('#alldata');
+    btn.click((ev) => {
         ev.preventDefault()
         $.ajax({
-            url:'http://localhost:3000/signup',
-            method:'post',
-            dataType:'json',
-            data:{
-                username:$("#username")[0].value,
-                password:$("#password")[0].value
+            url: 'http://localhost:3000/signup',
+            method: 'post',
+            dataType: 'json',
+            data: {
+                username: $("#username")[0].value,
+                password: $("#password")[0].value
             },
-            success:(msg)=>{
+            success: (msg) => {
                 console.log(msg)
             },
-            error(err){
+            error(err) {
                 console.log(err)
             }
         })
     })
-    btn1.click((ev)=>{
+    btn1.click((ev) => {
         ev.preventDefault()
         $.ajax({
-            url:'http://localhost:3000/register',
-            method:'post',
-            dataType:'json',
-            data:{
-                username:$("#username1")[0].value,
-                password:$("#password1")[0].value
+            url: 'http://localhost:3000/register',
+            method: 'post',
+            dataType: 'json',
+            data: {
+                username: $("#username1")[0].value,
+                password: $("#password1")[0].value
             },
-            success:(msg)=>{
+            success: (msg) => {
                 console.log(msg)
             },
-            error(err){
+            error(err) {
                 console.log(err)
             }
         })
     })
-    btn2.click(ev=>{
+    btn2.click(ev => {
         $.ajax({
-            url:'http://localhost:3000/logout',
-            method:'get',
-            dataType:'json',
-            success:(msg)=>{
+            url: 'http://localhost:3000/logout',
+            method: 'get',
+            dataType: 'json',
+            success: (msg) => {
                 console.log(msg)
             },
-            error(err){
+            error(err) {
                 console.log(err)
             }
         })
     })
-    btn3.click(ev=>{
+    btn3.click(ev => {
         $.ajax({
-            url:'http://localhost:3000/checkLogin',
-            method:'get',
-            dataType:'json',
-            success:(msg)=>{
+            url: 'http://localhost:3000/checkLogin',
+            method: 'get',
+            dataType: 'json',
+            success: (msg) => {
                 console.log(msg)
             },
-            error(err){
+            error(err) {
+                console.log(err)
+            }
+        })
+    })
+    btn4.click(ev => {
+        $.ajax({
+            url: 'http://localhost:3000/admstore',
+            method: 'get',
+            dataType: 'json',
+            success: (msg) => {
+                console.log(msg)
+            },
+            error(err) {
+                console.log(err)
+            }
+        })
+    })
+    queryId.click(ev => {
+        if ($("#storeId").val().trim() === "") return
+        $.ajax({
+            url: 'http://localhost:3000/admstore/' + $("#storeId").val(),
+            method: 'get',
+            dataType: 'json',
+            success: (msg) => {
+                console.log(msg)
+            },
+            error(err) {
+                console.log(err)
+            }
+        })
+    })
+    addStore.click(ev => {
+        ev.preventDefault()
+        $.ajax({
+            url: 'http://localhost:3000/admstore',
+            method: 'post',
+            dataType: 'json',
+            data: {
+                cname: $("#form2 input").eq(0).val(),
+                type: $("#form2 input").eq(1).val(),
+                total: $("#form2 input").eq(2).val(),
+                itemNo: $("#form2 input").eq(3).val(),
+                file: $("#form2 input").eq(4).val(),
+                content: $("#form2 input").eq(5).val(),
+                commentNo: $("#form2 input").eq(6).val(),
+                score: $("#form2 input").eq(7).val(),
+            },
+            success: (msg) => {
+                console.log(msg)
+            },
+            error(err) {
+                console.log(err)
+            }
+        })
+    })
+    updateStore.click(ev => {
+        ev.preventDefault()
+        $.ajax({
+            url: 'http://localhost:3000/admstore',
+            method: 'put',
+            dataType: 'json',
+            data: {
+                cname: $("#form2 input").eq(0).val(),
+                type: $("#form2 input").eq(1).val(),
+                total: $("#form2 input").eq(2).val(),
+                itemNo: $("#form2 input").eq(3).val(),
+                file: $("#form2 input").eq(4).val(),
+                content: $("#form2 input").eq(5).val(),
+                commentNo: $("#form2 input").eq(6).val(),
+                score: $("#form2 input").eq(7).val(),
+            },
+            success: (msg) => {
+                console.log(msg)
+            },
+            error(err) {
                 console.log(err)
             }
         })
