@@ -69,6 +69,8 @@
         <input type="file" name="file"/>
         <input type="submit" value="ok" id="uploads"/>
     </form>
+    <input type="text" id="delNo" placeholder="输入商品编号">
+    <button id="delbtn">删除</button>
 </div>
 <script src="http://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
 <script>
@@ -80,6 +82,7 @@
     var queryId = $('#queryId');
     var addStore = $('#addStore');
     var updateStore = $('#updateStore');
+    var delbtn = $('#delbtn');
     var box = $('#alldata');
     btn.click((ev) => {
         ev.preventDefault()
@@ -181,7 +184,7 @@
                 type: $("#form2 input").eq(1).val(),
                 total: $("#form2 input").eq(2).val(),
                 itemNo: $("#form2 input").eq(3).val(),
-                file: $("#form2 input").eq(4).val(),
+                imgArr: $("#form2 input").eq(4).val(),
                 content: $("#form2 input").eq(5).val(),
                 commentNo: $("#form2 input").eq(6).val(),
                 score: $("#form2 input").eq(7).val(),
@@ -209,6 +212,23 @@
                 content: $("#form2 input").eq(5).val(),
                 commentNo: $("#form2 input").eq(6).val(),
                 score: $("#form2 input").eq(7).val(),
+            },
+            success: (msg) => {
+                console.log(msg)
+            },
+            error(err) {
+                console.log(err)
+            }
+        })
+    })
+    delbtn.click(ev => {
+        ev.preventDefault()
+        $.ajax({
+            url: 'http://localhost:3000/admstore',
+            method: 'delete',
+            dataType: 'json',
+            data: {
+                itemNo:$("#delNo").val()
             },
             success: (msg) => {
                 console.log(msg)

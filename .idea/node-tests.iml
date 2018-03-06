@@ -19,5 +19,6 @@
     <orderEntry type="library" name="@types/node" level="application" />
     <orderEntry type="library" name="@types/mysql" level="application" />
     <orderEntry type="library" name="@types/koa" level="application" />
+    <orderEntry type="library" name="@types/koa-route" level="application" />
   </component>
 </module>
