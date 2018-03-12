@@ -10,6 +10,11 @@ const views = require('koa-views');
 const serve = require('koa-static');
 const app = new Koa();
 
+//socket.io
+const httpServer = require('http').Server(app.callback());
+const io = require('socket.io')(httpServer)
+
+
 const sessionMysqlConfig = {
     database:config.database.DATABASE,
     user:config.database.USERNAME,
@@ -36,8 +41,19 @@ app.use(bodyParser({
 app.use(require('./routers/signup.js').routes())//用户登录、注册、登录校验
 app.use(require('./routers/adminCURD.js').routes())//后台商品的设置
 
+io.on('connection', function(socket){
+    console.log(io.sockets.sockets)
+    console.log('a user connected');
+    socket.on('chat message',function (msg) {
+        io.emit('chat message',msg)
+    })
+    socket.on('disconnect', function(){
+        console.log('user disconnected');
+    });
+});
 
-app.listen(3000)
-console.log('listening on port:'+config.port)
+httpServer.listen(3000,()=>{
+    console.log('listening on port:'+config.port)
+})
 
 
