@@ -3,20 +3,67 @@
 <head>
     <title>Socket.IO chat</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font: 13px Helvetica, Arial; }
-        form { background: #000; padding: 3px; position: fixed; bottom: 0; width: 100%; }
-        form input { border: 0; padding: 10px; width: 90%; margin-right: .5%; }
-        form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }
-        #messages { list-style-type: none; margin: 0; padding: 0; }
-        #messages li { padding: 5px 10px; }
-        #messages li:nth-child(odd) { background: #eee; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font: 13px Helvetica, Arial;
+        }
+
+        form {
+            background: #000;
+            padding: 3px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+
+        form input {
+            border: 0;
+            padding: 10px;
+            width: 70%;
+            margin-right: .5%;
+        }
+
+        form button {
+            width: 9%;
+            background: rgb(130, 224, 255);
+            border: none;
+            padding: 10px;
+        }
+
+        #messages {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        #messages li {
+            padding: 5px 10px;
+        }
+
+        #messages li:nth-child(odd) {
+            background: #eee;
+        }
+
+        form {
+            color: white
+        }
     </style>
 </head>
 <body>
 <ul id="messages"></ul>
 <form action="">
-    <input id="m" autocomplete="off" /><button>Send</button>
+    内容<input id="m" autocomplete="off"/>
+    <hr>
+    我的名字<input id="myname" autocomplete="off"/>
+    <button id="mynamebtn">发我的名字</button>
+    <hr>
+    发给谁<input id="toname" autocomplete="off"/>
+    <button id="tonamebtn">发给谁</button>
 </form>
 </body>
 <script src="https://cdn.bootcss.com/socket.io/2.0.4/socket.io.js"></script>
@@ -24,15 +71,34 @@
 <script>
     $(function () {
         var socket = io.connect('127.0.0.1:3000')
-        $('form').submit(function(){
-            console.log(socket.id)
-            socket.emit('chat message', $('#m').val());
+//        socket.on('chat message', function(msg){
+//            $('#messages').append($('<li>').text(msg));
+//        });
+
+        //设置名字
+        $('#mynamebtn').click(function (ev) {
+            socket.emit('setmyname', $('#myname').val());
+            $('#myname').val('');
+            return false
+        })
+
+        //给指定人发送消息
+        $('#tonamebtn').click(function (ev) {
+            var tempobj = {
+                toname: $('#toname').val(),
+                msg: $('#m').val()
+            }
+            socket.emit('sayTo', tempobj);
             $('#m').val('');
-            return false;
+            $('#toname').val('');
+            return false
+        })
+        //监听收到的信息
+        socket.on('onmessage', function (msg) {
+            console.log(msg)
         });
-        socket.on('chat message', function(msg){
-            $('#messages').append($('<li>').text(msg));
-        });
+
+
     });
 </script>
 </html>

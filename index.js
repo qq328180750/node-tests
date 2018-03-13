@@ -12,7 +12,8 @@ const app = new Koa();
 
 //socket.io
 const httpServer = require('http').Server(app.callback());
-const io = require('socket.io')(httpServer)
+const io = require('socket.io')(httpServer);
+let socketArr = [];//存储socket信息
 
 
 const sessionMysqlConfig = {
@@ -42,13 +43,23 @@ app.use(require('./routers/signup.js').routes())//用户登录、注册、登录
 app.use(require('./routers/adminCURD.js').routes())//后台商品的设置
 
 io.on('connection', function(socket){
-    console.log(io.sockets.sockets)
-    console.log('a user connected');
+    // console.log(io.sockets.sockets)
+    // console.log('a user connected');
+    socket.on('setmyname',function (msg) {
+        let names = msg;
+        socketArr[names] = socket.id;
+        console.log(socketArr);
+    })
+    socket.on('sayTo',function (data) {
+        console.log(socketArr[data.toname])
+        io.sockets.sockets[socketArr[data.toname]].emit('onmessage',data)
+    })
+    //所有人广播
     socket.on('chat message',function (msg) {
         io.emit('chat message',msg)
     })
     socket.on('disconnect', function(){
-        console.log('user disconnected');
+        // console.log('user disconnected');
     });
 });
 
