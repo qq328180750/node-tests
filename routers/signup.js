@@ -38,6 +38,7 @@ router.post('/register', async (ctx, next) => {
         ctx.response.body = {code: 401, msg: "注册失败"}
     })
 })
+
 //登出
 router.get('/logout', async (ctx, next) => {
     ctx.session = null;

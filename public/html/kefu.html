@@ -64,6 +64,8 @@
     <hr>
     发给谁<input id="toname" autocomplete="off"/>
     <button id="tonamebtn">发给谁</button>
+    <button id="outline">下线</button>
+    <button id="ranking">我在第几名</button>
 </form>
 </body>
 <script src="https://cdn.bootcss.com/socket.io/2.0.4/socket.io.js"></script>
@@ -71,12 +73,14 @@
 <script>
     $(function () {
         var socket = io.connect('127.0.0.1:3000')
+        var username ;
 //        socket.on('chat message', function(msg){
 //            $('#messages').append($('<li>').text(msg));
 //        });
 
         //设置名字
         $('#mynamebtn').click(function (ev) {
+            username = $('#myname').val()
             socket.emit('setmyname', $('#myname').val());
             $('#myname').val('');
             return false
@@ -93,10 +97,20 @@
             $('#toname').val('');
             return false
         })
+        //查看我在第几名
+        $('#ranking').click(function (ev) {
+            socket.emit('ranking');
+            return false
+        })
         //监听收到的信息
         socket.on('onmessage', function (msg) {
             console.log(msg)
         });
+        //监听有人退出
+        socket.on('offline',function (username) {
+            //看自己排名
+            socket.emit('ranking');
+        })
 
 
     });
