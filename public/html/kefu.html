@@ -89,6 +89,7 @@
         //给指定人发送消息
         $('#tonamebtn').click(function (ev) {
             var tempobj = {
+                from:username,
                 toname: $('#toname').val(),
                 msg: $('#m').val()
             }
@@ -110,6 +111,9 @@
         socket.on('offline',function (username) {
             //看自己排名
             socket.emit('ranking');
+        })
+        socket.on('myranking',function (ranking) {
+            console.log(ranking)
         })
 
 

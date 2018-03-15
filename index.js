@@ -9,6 +9,7 @@ const router = require('koa-router');
 const views = require('koa-views');
 const serve = require('koa-static');
 const _ = require('lodash');
+const socketIoUtils = require('./lib/socketio')
 const app = new Koa();
 
 //socket.io
@@ -46,7 +47,9 @@ app.use(require('./routers/adminCURD.js').routes())//后台商品的设置
 io.on('connection', function (socket) {
     // console.log(io.sockets.sockets)
     // console.log('a user connected');
+    //对应用户设置名字
     socket.on('setmyname', function (names) {
+        if(names===''||_.findIndex(socketArr,o=>{return o.socketId===socket.id})!==-1)return
         let tempObj = {names: names, socketId: socket.id};
         let num = _.findIndex(socketArr,o=>{return o.names===names});
         if (num===-1){
@@ -57,16 +60,18 @@ io.on('connection', function (socket) {
             socketArr.push(socketArr.splice(num,1)[0])
         }
         console.log(socketArr);
-        // console.log("我在第"+_.findIndex(socketArr,o=>{return o.names===names}))
     })
+    //给指定人发送信息
     socket.on('sayTo', function (data) {
-        console.log(socketArr[data.toname])
-        io.sockets.sockets[socketArr[data.toname]].emit('onmessage', data)
+        socketIoUtils.addmessage(data)
+        let num = _.findIndex(socketArr,o=>{return o.names===data.toname});
+        io.sockets.sockets[socketArr[num].socketId].emit('onmessage', data.msg);
     })
     //排名
     socket.on('ranking', function () {
         let num = _.findIndex(socketArr,o=>{return o.socketId===socket.id});
-        console.log(num)
+        if (num===-1)return
+        socket.emit('myranking',num)
     })
     //所有人广播
     socket.on('chat message', function (msg) {
@@ -76,8 +81,10 @@ io.on('connection', function (socket) {
         // console.log('user disconnected');
         //若下线，则删除指定用户
         // console.log(socket.id)
+        let num = _.findIndex(socketArr,o=>{return o.socketId===socket.id})
+        socketIoUtils.disconnectDb(socketArr[num].names)
         _.remove(socketArr,o=>{return o.socketId===socket.id})
-        console.log(socketArr)
+        // console.log(socketArr)
         io.emit('offline')
     });
 });
