@@ -71,6 +71,19 @@
     </form>
     <input type="text" id="delNo" placeholder="输入商品编号">
     <button id="delbtn">删除</button>
+    <hr>
+    <h1>评论系统</h1>
+    <div>
+        评论的商品编号:
+        <input type="text" id="commentItemId">
+        用户名:
+        <input type="text" id="commentUsername">
+        打分数:
+        <input type="text" id="commentScore">
+        评论内容
+        <input type="text" id="commentContent">
+        <button id="commentBtn">提交评论</button>
+    </div>
 </div>
 <script src="http://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
 <script>
@@ -83,6 +96,7 @@
     var addStore = $('#addStore');
     var updateStore = $('#updateStore');
     var delbtn = $('#delbtn');
+    var commentBtn = $('#commentBtn')
     var box = $('#alldata');
     btn.click((ev) => {
         ev.preventDefault()
@@ -228,7 +242,24 @@
             method: 'delete',
             dataType: 'json',
             data: {
-                itemNo:$("#delNo").val()
+                itemNo: $("#delNo").val()
+            },
+            success: (msg) => {
+                console.log(msg)
+            },
+            error(err) {
+                console.log(err)
+            }
+        })
+    })
+    commentBtn.click(ev=>{
+        ev.preventDefault();
+        $.ajax({
+            url: 'http://localhost:3000/admstore',
+            method: 'delete',
+            dataType: 'json',
+            data: {
+                itemNo: $("#delNo").val()
             },
             success: (msg) => {
                 console.log(msg)
