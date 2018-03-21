@@ -76,13 +76,16 @@
     <div>
         评论的商品编号:
         <input type="text" id="commentItemId">
-        用户名:
+        用户Id:
         <input type="text" id="commentUsername">
         打分数:
         <input type="text" id="commentScore">
         评论内容
         <input type="text" id="commentContent">
         <button id="commentBtn">提交评论</button>
+        <hr>
+        <h2>删除评论</h2>
+        <input type="text" id="commentNoDel">|<button id="commentDel">删除指定id评论</button>
     </div>
 </div>
 <script src="http://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
@@ -255,11 +258,14 @@
     commentBtn.click(ev=>{
         ev.preventDefault();
         $.ajax({
-            url: 'http://localhost:3000/admstore',
-            method: 'delete',
+            url: 'http://localhost:3000/comment',
+            method: 'post',
             dataType: 'json',
             data: {
-                itemNo: $("#delNo").val()
+                itemNo: $("#commentItemId").val(),
+                userId: $("#commentUsername").val(),
+                commentScore: $("#commentScore").val(),
+                content:$("#commentContent").val()
             },
             success: (msg) => {
                 console.log(msg)
@@ -269,6 +275,24 @@
             }
         })
     })
+    $("#commentDel").click(ev=>{
+        ev.preventDefault()
+        $.ajax({
+            url: 'http://localhost:3000/comment',
+            method: 'delete',
+            dataType: 'json',
+            data:{
+                commentNo:$("#commentNoDel").val()
+            },
+            success:(msg)=>{
+                console.log(msg)
+            },
+            error(err){
+                console.log(err)
+            }
+        })
+    })
+
 </script>
 </body>
 </html>

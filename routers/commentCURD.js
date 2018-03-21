@@ -21,25 +21,27 @@ router.get('/comment', async (ctx, next) => {//获取所有评论
         ctx.response.body = res
     })
 })
-router.get('/comment/:id', async (ctx, next) => {//获取指定商品
-    await storeModel.queryStore(ctx.params.id).then(res => {
+router.get('/comment/:id', async (ctx, next) => {//获取指定商品的评论
+    await storeModel.queryComment(ctx.params.id).then(res => {
         if (res && res.length !== 0) {
             ctx.response.body = {code: 200, data: res}
         } else {
-            ctx.response.body = {code: "error", msg: "没找到此编号商品"}
+            ctx.response.body = {code: "error", msg: "没找到对应此商品的评论"}
         }
     })
 })
-router.post('/comment', upload.single('file'), async (ctx, next) => {//增加商品
-    await console.log(ctx.req.file)
-    await storeModel.addStore(ctx.request.body).then(res => {
-        console.log(res)
+router.post('/comment', async (ctx, next) => {//添加一条评论
+    let date = Date.now();
+    ctx.request.body.commentTime = date;
+    await storeModel.addComment(ctx.request.body).then(res => {
+        ctx.response.body = {code:200,msg:"ok"}
     }).catch(err => {
         console.log(err.sqlMessage)
+        ctx.response.body = {code:"error",msg:"数据非法"}
     })
 })
-router.put('/comment', async (ctx, next) => {//更新商品
-    await storeModel.updateStore(ctx.request.body).then(res => {
+router.put('/comment', async (ctx, next) => {//修改评论
+    await storeModel.updateComment(ctx.request.body).then(res => {
         console.log(res)
         if (res.affectedRows !== 0) {
             if (res.changedRows !== 0) {
@@ -56,13 +58,13 @@ router.put('/comment', async (ctx, next) => {//更新商品
         console.log(err.sqlMessage)
     })
 })
-router.del('/comment', async (ctx, next) => {//删除商品
-    await storeModel.deleteStore(ctx.request.body.itemNo).then(res=>{
+router.del('/comment', async (ctx, next) => {//删除评论
+    await storeModel.deleteComment(ctx.request.body.commentNo).then(res=>{
         if(res.affectedRows!==0){
             ctx.response.body = {code:"ok",msg:"删除成功"}
         }else {
             ctx.response.body = {code:"error",msg:"没有此编号"}
-        }
+    }
     }).catch(err=>{
         console.log(err)
     })
