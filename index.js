@@ -44,6 +44,7 @@ app.use(bodyParser({
 app.use(require('./routers/signup.js').routes())//用户登录、注册、登录校验
 app.use(require('./routers/adminCURD.js').routes())//后台商品的设置
 app.use(require('./routers/commentCURD.js').routes())//商品对应留言板
+app.use(require('./routers/ordersCURD.js').routes())//订单增删改查
 
 
 io.on('connection', function (socket) {

@@ -87,6 +87,18 @@
         <h2>删除评论</h2>
         <input type="text" id="commentNoDel">|<button id="commentDel">删除指定id评论</button>
     </div>
+    <hr>
+    <h1>选购商品</h1>
+    <div>
+        <h3>输入需要购买的商品的编号型号以及个数</h3>
+        商品编号:
+        <input type="text" id="orderItemId">
+        类型:
+        <input type="text" id="orderType">
+        数量
+        <input type="text" id="orderNum">
+        <button id="orderId">购买</button>
+    </div>
 </div>
 <script src="http://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
 <script>
@@ -292,6 +304,26 @@
             }
         })
     })
+    $("#orderId").click(ev=>{
+        ev.preventDefault();
+        $.ajax({
+            url: 'http://localhost:3000/orders',
+            method: 'post',
+            dataType: 'json',
+            data:{
+                orderItemId:$("#orderItemId").val(),
+                orderType:$("#orderType").val(),
+                orderNum:$("#orderNum").val()
+            },
+            success:(msg)=>{
+                console.log(msg)
+            },
+            error(err){
+                console.log(err)
+            }
+        })
+    })
+
 
 </script>
 </body>
