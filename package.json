@@ -21,7 +21,7 @@
   },
   "homepage": "https://github.com/qq328180750/node-tests#readme",
   "dependencies": {
-    "ejs": "^2.5.7",
+    "ejs": "^2.5.9",
     "jsonwebtoken": "^8.2.0",
     "koa": "^2.5.0",
     "koa-bodyparser": "^4.2.0",

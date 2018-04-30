@@ -1,0 +1,168 @@
+/*头部开始*/
+.top-login{
+    background: #eee;
+    overflow: hidden;
+    color: #999;
+    height: 30px;
+    line-height: 30px;
+}
+.top-login-left{
+    float: left;
+}
+.top-login-left>img{
+    float: left;
+}
+.top-login-left>div{
+    float: left;
+}
+.top-login-right{
+    float: right;
+    overflow: hidden;
+}
+.top-login-right>li{
+    float: left;
+    margin: 0 5px;
+}
+/*顶部搜索栏*/
+.top-search-wrap{
+    width: 100%;
+}
+.top-search{
+    width: 80%;
+    margin: auto;
+    overflow: hidden;
+    padding: 20px 0;
+    height: 80px;
+}
+.search-logo{
+    float: left;
+    height: 100%;
+    width: 300px;
+}
+.search-logo>img{
+    height: 100%;
+    width: 100%;
+}
+.top-search>.nav-bar{
+    float: left;
+    height: 100%;
+}
+.top-search-right{
+    float: right;
+}
+.nav-bar>li{
+    float: left;
+    height: 100%;
+    text-align: center;
+    position: relative;
+}
+.nav-bar>li>a{
+    display: block;
+    margin: 20px 0;
+    padding: 0 20px;
+    border-right: 2px solid #eee;
+    color: #999999;
+}
+.nav-bar>li:nth-child(5)>a{
+    border-right: none;
+}
+.now-select>div{
+    width: 80%;
+    height: 2px;
+    background: #64a131;
+    margin: auto;
+}
+.now-select>a{
+    color: #64a131!important;
+}
+.top-search-right{
+    margin-top: 20px;
+}
+.top-search-right>div{
+    float: left;
+}
+.search-right-l-search>input,.search-right-l-search>button{
+    border: none;
+    outline: none;
+    background: none;
+}
+.search-right-l-search>input{
+    height: 25px;
+}
+.search-right-l-search>button>img{
+    height: 20px;
+    width: 20px;
+}
+.search-right-l-search>button{
+    padding: 2px 6px;
+    line-height: 20px;
+}
+.search-right-l-hot{
+    border-top: 1px solid #999;
+    color: #999;
+}
+.search-right-l-hot>a{
+    color: #999;
+}
+.search-right-r{
+    margin-left: 20px;
+    position: relative;
+}
+.search-right-r>span{
+    position: absolute;
+    top: 0;
+    left: 45%;
+    color: white;
+}
+/*轮播图图片大小*/
+.swiper-wrap img{
+    width: 100%;
+    height: 400px;
+}
+/*中部广告*/
+.mid-wrap{
+    width: 100%;
+}
+.mid-content{
+    width: 80%;
+    margin: auto;
+}
+.mid-hot{
+    width: 100%;
+    margin-top: 10px;
+    margin-bottom: 50px;
+}
+.mid-hot img{
+    width: 100%;
+}
+/*固定模块样式*/
+.modules-wrap{
+    width: 100%;
+    border-top: 2px solid #ccc;
+}
+.modules-title{
+    overflow: hidden;
+    padding: 15px 0 10px;
+}
+.modules-title>h1{
+    font-size: 30px;
+    font-weight: bolder;
+    display: inline;
+}
+.modules-title>span{
+    float: right;
+    line-height: 33px;
+}
+.modules-list{
+    overflow: hidden;
+}
+.modules-list-cell{
+    width: 20%;
+    float: left;
+    padding-right: 20px;
+    padding-top: 10px;
+    box-sizing: border-box;
+}
+.cell-img>img{
+    width: 100%;
+}

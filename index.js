@@ -25,6 +25,7 @@ const sessionMysqlConfig = {
     host: config.database.HOST
 };
 app.use(serve(path.join(__dirname, './public/html'), {extensions: ['html']}));
+app.use(serve(path.join(__dirname, './views'), {extensions: ['css']}));
 app.use(session({
     key: 'USER_SID',
     store: new MysqlStore(sessionMysqlConfig),
@@ -36,15 +37,19 @@ app.use(session({
 
 app.use(views(path.join(__dirname, './views'), {
     extension: 'ejs'
-}))
+}))//设置渲染模板
+
 app.use(bodyParser({
     formLimit: '1mb'
 }))
+
+app.use(require('./routers/ejsView.js').routes())//进入渲染模板路由
 
 app.use(require('./routers/signup.js').routes())//用户登录、注册、登录校验
 app.use(require('./routers/adminCURD.js').routes())//后台商品的设置
 app.use(require('./routers/commentCURD.js').routes())//商品对应留言板
 app.use(require('./routers/ordersCURD.js').routes())//订单增删改查
+
 
 
 io.on('connection', function (socket) {
